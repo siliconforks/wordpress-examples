@@ -19,7 +19,14 @@ Most of these examples are from:
 class Example_Customize_Admin_Section {
 	public function __construct() {
 		add_action( 'add_admin_bar_menus', array( $this, 'add_admin_bar_menus' ) );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+
+		/*
+		WordPress adds the theme editor menu item in an 'admin_menu'
+		action hook with priority 101.  To remove it, we need an
+		'admin_menu' hook with priority 102 or more.
+		*/
+		add_action( 'admin_menu', array( $this, 'admin_menu' ), 102 );
+
 		remove_action( 'welcome_panel', 'wp_welcome_panel' );
 		add_action( 'wp_dashboard_setup', array( $this, 'wp_dashboard_setup' ) );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
@@ -43,6 +50,14 @@ class Example_Customize_Admin_Section {
 
 		// can remove "Comments" menu item if your site does not allow comments
 		remove_menu_page( 'edit-comments.php' );
+
+		/*
+		Remove the "Editor" menu item.  Note that this can also be done
+		by defining DISALLOW_FILE_EDIT to TRUE:
+		  https://codex.wordpress.org/Editing_wp-config.php
+		*/
+		remove_submenu_page( 'themes.php', 'theme-editor.php' );
+		remove_submenu_page( 'plugins.php', 'plugin-editor.php' );
 	}
 
 	public function wp_dashboard_setup() {
