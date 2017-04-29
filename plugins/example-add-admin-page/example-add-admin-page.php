@@ -80,7 +80,7 @@ class Example_Add_Admin_Page {
 					</tbody>
 				</table>
 				<?php
-				submit_button( 'Save Settings' );
+				submit_button( 'Save Changes' );
 				?>
 			</form>
 		</div>

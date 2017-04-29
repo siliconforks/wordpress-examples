@@ -90,7 +90,7 @@ class Example_Settings_API {
 				<?php
 				settings_fields( self::OPTION_GROUP );
 				do_settings_sections( self::PAGE_SLUG );
-				submit_button( 'Save Settings' );
+				submit_button( 'Save Changes' );
 				?>
 			</form>
 		</div>
