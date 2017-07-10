@@ -45,7 +45,16 @@ class Example_Custom_Post_Type {
 			'show_in_nav_menus' => FALSE,
 			'show_ui' => TRUE,
 			'menu_icon' => 'dashicons-wordpress',
+
+			/*
+			By default, hierarchical custom post types are ordered
+			alphabetically, while non-hierarchical custom post types
+			are ordered by date.  Hence, you may want to set
+			'hierarchical' to TRUE even if you don't want to specify
+			Parents.
+			*/
 			'hierarchical' => FALSE,
+
 			'supports' => array(
 				'title',
 				'editor',
