@@ -22,7 +22,7 @@ class Example_Customize_Login_Page {
 	}
 
 	public function login_enqueue_scripts() {
-		wp_enqueue_style( 'example-customize-login-page', EXAMPLE_CUSTOMIZE_LOGIN_PAGE_URL . '/css/style.css' );
+		wp_enqueue_style( 'example-customize-login-page', EXAMPLE_CUSTOMIZE_LOGIN_PAGE_URL . 'css/style.css' );
 	}
 
 	public function login_headerurl() {
