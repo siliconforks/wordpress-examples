@@ -59,6 +59,14 @@ wp_body_open();
 					'theme_location' => 'menu-1',
 					'menu_id' => 'site-header-navigation-menu',
 					'container' => FALSE,
+
+					/*
+					The default callback is wp_page_menu();
+					unfortunately the structure of this does not match the structure of the non-fallback menu.
+					(It is wrapped in a <div> element even though we set 'container' to FALSE above.)
+					It is best to just disable the fallback entirely.
+					*/
+					'fallback_cb' => FALSE,
 				)
 			);
 			?>
