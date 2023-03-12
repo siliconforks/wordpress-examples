@@ -65,16 +65,26 @@ class Example_List_Table extends WP_List_Table {
 		}
 
 		$table = $wpdb->prefix . 'example_list_table';
-		$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM ' . $table;
+		$where_sql = '';
 		if ( $this->search_string !== '' ) {
-			$sql .= ' WHERE example_name LIKE \'%' . esc_sql( $this->search_string ) . '%\'';
-			$sql .= ' OR example_email LIKE \'%' . esc_sql( $this->search_string ) . '%\'';
+			$where_sql .= ' WHERE example_name LIKE \'%' . esc_sql( $this->search_string ) . '%\'';
+			$where_sql .= ' OR example_email LIKE \'%' . esc_sql( $this->search_string ) . '%\'';
 		}
+		$sql = 'SELECT * FROM ' . $table . $where_sql;
 		$sql .= ' ORDER BY ' . $order_sql . ' LIMIT ' . $offset . ', ' . $per_page;
 		$this->items = $wpdb->get_results( $sql, ARRAY_A );
 
-		$sql = 'SELECT FOUND_ROWS()';
-		$total_items = $wpdb->get_var( $sql );
+		if ( count( $this->items ) < $per_page ) {
+			$total_items = $offset + count( $this->items );
+		}
+		else {
+			$sql = 'SELECT COUNT(*) FROM ' . $table . $where_sql;
+			$total_items = $wpdb->get_var( $sql );
+			$next_offset = $offset + $per_page;
+			if ( $total_items < $next_offset ) {
+				$total_items = $next_offset;
+			}
+		}
 
 		$this->set_pagination_args(
 			array(
