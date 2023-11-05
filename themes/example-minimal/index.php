@@ -5,7 +5,15 @@ get_header();
 	<main id="content">
 
 		<?php
-		if ( have_posts() ) {
+		/*
+		Note that it is necessary to test is_404() before have_posts(),
+		because it is possible for have_posts() to return true even when is_404() is true.
+		We don't want to be displaying posts in that case, so we need to check is_404() first.
+		*/
+		if ( is_404() ) {
+			get_template_part( 'template-parts/content', '404' );
+		}
+		elseif ( have_posts() ) {
 			if ( is_archive() ) {
 				?>
 				<header class="page-header">
@@ -55,9 +63,6 @@ get_header();
 			so it is safe to call this even for single posts.
 			*/
 			the_posts_navigation();
-		}
-		elseif ( is_404() ) {
-			get_template_part( 'template-parts/content', '404' );
 		}
 		else {
 			get_template_part( 'template-parts/content', 'none' );
